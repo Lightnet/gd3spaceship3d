@@ -2,6 +2,7 @@ extends Node
 
 var ip = "127.0.0.1"
 var SERVER_PORT = 3000
+var chatnode = null
 
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -33,37 +34,40 @@ var my_info = { name = "Johnson Magenta", favorite_color = Color8(255, 0, 255) }
 
 func _player_connected(id):
 	print("connected")
-	#var chatlog = get_node("Panel/RichTextLabel")
-	#chatlog.add_text("connected!" + "\n")
+	if (chatnode !=null):
+		chatnode.message("connected!")
 	pass # Will go unused, not useful here
 	
 func _player_disconnected(id):
-	#var chatlog = get_node("Panel/RichTextLabel")
-	#chatlog.add_text("disconnected!" + "\n")
+	if (chatnode !=null):
+		chatnode.message("disconnected!")
 	player_info.erase(id) # Erase player from info
 
 func _connected_ok():
-	#var chatlog = get_node("Panel/RichTextLabel")
-	#chatlog.add_text("connected!" + "\n")
+	if (chatnode !=null):
+		chatnode.message("connected!")
 	# Only called on clients, not server. Send my ID and info to all the other peers
 	rpc("register_player", get_tree().get_network_unique_id(), my_info)
 	
 func _server_disconnected():
-	#var chatlog = get_node("Panel/RichTextLabel")
-	#chatlog.add_text("_server_disconnected!" + "\n")
+	if (chatnode !=null):
+		chatnode.message("_server_disconnected!")
+	
+	#var chatlog = get_node("root/scene")
+	#print(chatlog)
 	print("_server_disconnected")
 	pass # Server kicked us, show error and abort
 
 func _connected_fail():
-	#var chatlog = get_node("Panel/RichTextLabel")
-	#chatlog.add_text("_server_disconnected!" + "\n")
+	if (chatnode !=null):
+		chatnode.message("_server_disconnected!")
 	print("_connected_fail")
 	pass # Could not even connect to server, abort
 
 remote func message_player(text):
 	print("messages",text)
-	#var chatlog = get_node("Panel/RichTextLabel")
-	#chatlog.add_text(text + "\n")
+	if (chatnode !=null):
+		chatnode.message(text)
 	
 master func chatmessage(value):
 	rpc("message_player",value)
@@ -80,29 +84,4 @@ remote func register_player(id, info):
 			rpc_id(id, "register_player", peer_id, player_info[peer_id])
 	# Call function to update lobby UI here
 	
-	
-func _on_btnserver_pressed():
-	create_server()
-	#var chatlog = get_node("Panel/RichTextLabel")
-	#chatlog.add_text("server created.." + "\n")
-	pass
-	
-func _on_btnclient_pressed():
-	connect_client()
-	#var chatlog = get_node("Panel/RichTextLabel")
-	#chatlog.add_text("client connecting.." + "\n")
-	pass
-	
-func _on_btntest_pressed():
-	
-	pass
-	
-func _on_LineEdit_text_entered( text ):
-	#print(text)
-	#chatlog.set_scroll_follow(true)
-	#chatlog.append_bbcode(text + "\n")
-	#var chatlog = get_node("Panel/RichTextLabel")
-	#chatlog.add_text(text + "\n")
-	#chatmessage(text)
-	
-	pass
+
