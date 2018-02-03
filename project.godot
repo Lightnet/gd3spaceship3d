@@ -14,6 +14,12 @@ config/name="gd3spaceship3d"
 run/main_scene="res://scenes/scenespaceship.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+global="*res://scripts/global.gd"
+settings="*res://scripts/settings.gd"
+network="*res://scripts/network.gd"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
