@@ -1,9 +1,5 @@
 extends Control
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
-
 var path_network = "/root/network"
 var network = null
 
@@ -40,16 +36,16 @@ func _on_BtnStartClient_pressed():
 	chatlog.add_text("client connecting.." + "\n")
 	pass # replace with function body
 
-
 func _on_BtnSendTest_pressed():
-	#if (get_tree().is_networking_server()):
+	var chatlog = get_node("Panel_Chat/RichTextLabel")
+	chatlog.add_text("test" + "\n")
 	network.chatmessage("test")
-	#else:
-		#print("network net setup?")
+	
 	pass # replace with function body
 
 
 func _on_BtnSpawn_pressed():
+	
 	pass # replace with function body
 
 func _on_LineEdit_Chat_text_entered( new_text ):
