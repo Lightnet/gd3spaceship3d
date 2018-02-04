@@ -36,23 +36,23 @@ var my_info = { name = "Johnson Magenta", favorite_color = Color8(255, 0, 255) }
 
 func _player_connected(id):
 	print("connected")
-	if (chatnode !=null):
+	if chatnode !=null:
 		chatnode.message("connected!")
 	pass # Will go unused, not useful here
 	
 func _player_disconnected(id):
-	if (chatnode !=null):
+	if chatnode !=null:
 		chatnode.message("disconnected!")
 	player_info.erase(id) # Erase player from info
 
 func _connected_ok():
-	if (chatnode !=null):
+	if chatnode !=null:
 		chatnode.message("connected!")
 	# Only called on clients, not server. Send my ID and info to all the other peers
 	rpc("register_player", get_tree().get_network_unique_id(), my_info)
 	
 func _server_disconnected():
-	if (chatnode !=null):
+	if chatnode !=null:
 		chatnode.message("_server_disconnected!")
 	
 	#var chatlog = get_node("root/scene")
@@ -68,7 +68,7 @@ func _connected_fail():
 
 remote func message_player(text):
 	print("messages",text)
-	if (chatnode !=null):
+	if chatnode !=null:
 		chatnode.message(text)
 	
 master func chatmessage(value):
@@ -78,14 +78,42 @@ remote func register_player(id, info):
 	# Store the info
 	player_info[id] = info
 	# If I'm the server, let the new guy know about existing players
-	if (get_tree().is_network_server()):
+	if get_tree().is_network_server():
 		# Send my info to new player
 		rpc_id(id, "register_player", 1, my_info)
 		# Send the info of existing players
 		for peer_id in player_info:
 			rpc_id(id, "register_player", peer_id, player_info[peer_id])
 	# Call function to update lobby UI here
-	
+
+remote func spawn_player(id):
+	var selfPeerID = id
+	var my_player = preload("res://objects/KBPlayerCube.tscn").instance()
+	my_player.set_name(str(selfPeerID))
+	my_player.set_network_master(selfPeerID) # Will be explained later
+	get_node("/root/Node/players").add_child(my_player)
+	pass
+
+master func spawn():
+
+	var selfPeerID = get_tree().get_network_unique_id()
+	var my_player = preload("res://objects/KBPlayerCube.tscn").instance()
+	#print(my_player)
+	my_player.set_name(str(selfPeerID))
+	my_player.set_network_master(selfPeerID) # Will be explained later
+
+	my_player.get_node("Camera").current = true
+
+	#var pos = Vector3(round(rand_range(0,5)),5,round(rand_range(0,5)))
+	#var pos = Vector3(0,0,0)
+	#my_player.transform.origin = pos
+	get_node("/root/Node/players").add_child(my_player)
+
+	for p in player_info:
+		print(p)
+		rpc_id(p, "spawn_player", selfPeerID)
+	pass
+
 remote func pre_configure_game(selfPeerID):
 	#get_tree().set_pause(true) # Pre-pause
 	#var selfPeerID = get_tree().get_network_unique_id()

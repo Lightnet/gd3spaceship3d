@@ -11,7 +11,7 @@ onready var cam = get_node("Camera")
 func _physics_process(delta):
     #move(direction * delta)
 	#print("_physics_process")
-	if (is_network_master()):
+	if is_network_master():
 		var dir = Vector3() # Where does the player intend to walk to
 		var cam_xform = cam.get_global_transform()
 		if Input.is_key_pressed(KEY_W):
@@ -28,14 +28,14 @@ func _physics_process(delta):
 		hvel.y = 0
 		var target = dir*MAX_SPEED
 		var accel
-		if (dir.dot(hvel) > 0):
+		if dir.dot(hvel) > 0:
 			accel = ACCEL
 		else:
 			accel = DEACCEL
 		hvel = hvel.linear_interpolate(target, accel*delta)
 		slave_vel.x = hvel.x
 		slave_vel.z = hvel.z
-		print(slave_vel)
+		#print(slave_vel)
 		rset("slave_vel", slave_vel)
 		#move(slave_vel*delta)
 	else:
@@ -87,10 +87,10 @@ func _input(ev):
 	#print("Viewport Resolution is: ", get_viewport_rect().size)
 	
 	if(Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT)):
-		print("->")
+		#print("->")
 		pass
 	if(Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT)):
-		print("<-")
+		#print("<-")
 		#var hVector = Vector3(0,0,1)
 		pass
 		#self.move(hVector)

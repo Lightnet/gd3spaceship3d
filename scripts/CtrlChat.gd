@@ -40,12 +40,11 @@ func _on_BtnSendTest_pressed():
 	var chatlog = get_node("Panel_Chat/RichTextLabel")
 	chatlog.add_text("test" + "\n")
 	network.chatmessage("test")
-	
 	pass # replace with function body
 
-
 func _on_BtnSpawn_pressed():
-	network.setup_config_game()
+	#network.setup_config_game()
+	network.spawn()
 	pass # replace with function body
 
 func _on_LineEdit_Chat_text_entered( new_text ):
