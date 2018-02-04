@@ -4,19 +4,50 @@ const ACCEL= 2
 const DEACCEL= 4
 const MAX_SPEED = 10
 
-var vel = Vector3()
+slave var slave_vel = Vector3()
 
 onready var cam = get_node("Camera")
-
 
 func _physics_process(delta):
     #move(direction * delta)
 	#print("_physics_process")
+	if (is_network_master()):
+		var dir = Vector3() # Where does the player intend to walk to
+		var cam_xform = cam.get_global_transform()
+		if Input.is_key_pressed(KEY_W):
+			dir += -cam_xform.basis[2]
+		if Input.is_key_pressed(KEY_S):
+			dir += cam_xform.basis[2]
+		if Input.is_key_pressed(KEY_A):
+			dir += -cam_xform.basis[0]
+		if Input.is_key_pressed(KEY_D):
+			dir += cam_xform.basis[0]
+		dir.y = 0
+		dir = dir.normalized()
+		var hvel = slave_vel
+		hvel.y = 0
+		var target = dir*MAX_SPEED
+		var accel
+		if (dir.dot(hvel) > 0):
+			accel = ACCEL
+		else:
+			accel = DEACCEL
+		hvel = hvel.linear_interpolate(target, accel*delta)
+		slave_vel.x = hvel.x
+		slave_vel.z = hvel.z
+		print(slave_vel)
+		rset("slave_vel", slave_vel)
+		#move(slave_vel*delta)
+	else:
+		pass
+	move_and_collide(slave_vel*delta)
 	pass
 
 func _process(delta):
 	# Called every frame. Delta is time since last frame.
 	# Update game logic here.
+	"""
+	print("_process")
 	var dir = Vector3() # Where does the player intend to walk to
 	var cam_xform = cam.get_global_transform()
 	if Input.is_key_pressed(KEY_W):
@@ -43,7 +74,7 @@ func _process(delta):
 	print(vel)
 	move_and_collide(vel*delta)
 	#move(vel*delta)
-	
+	"""
 	pass
 
 func _input(ev):
@@ -56,16 +87,19 @@ func _input(ev):
 	#print("Viewport Resolution is: ", get_viewport_rect().size)
 	
 	if(Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT)):
-		#print("->")
+		print("->")
 		pass
 	if(Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT)):
-		#print("<-")
+		print("<-")
 		#var hVector = Vector3(0,0,1)
 		pass
 		#self.move(hVector)
 	
 	pass
 
+func set_player_name(new_name):
+	#get_node("label").set_text(new_name)
+	pass
 
 func _ready():
 	#cam = get_node("Camera"))

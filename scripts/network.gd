@@ -19,12 +19,14 @@ func create_server():
 	var host = NetworkedMultiplayerENet.new()
 	host.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(host)
+	#get_tree().set_meta("network_peer", peer)
 	print("server create")
 
 func connect_client(): 
 	var host = NetworkedMultiplayerENet.new()
 	host.create_client(ip, SERVER_PORT)
 	get_tree().set_network_peer(host)
+	#get_tree().set_meta("network_peer", peer)
 	print("connect client")
 	
 # Player info, associate ID to data
@@ -84,4 +86,101 @@ remote func register_player(id, info):
 			rpc_id(id, "register_player", peer_id, player_info[peer_id])
 	# Call function to update lobby UI here
 	
+remote func pre_configure_game(selfPeerID):
+	#get_tree().set_pause(true) # Pre-pause
+	#var selfPeerID = get_tree().get_network_unique_id()
+	print("peer ID:",selfPeerID)
+	# Load world
+	#var world = load(which_level).instance()
+	#get_node("/root").add_child(world)
 
+	# Load my player #master
+	var my_player = preload("res://objects/KBPlayerCube.tscn").instance()
+	print(my_player)
+	my_player.set_name(str(selfPeerID))
+	my_player.set_network_master(selfPeerID) # Will be explained later
+	var pos = Vector3(round(rand_range(0,5)),5,round(rand_range(0,5)))
+	#var pos = Vector3(0,0,0)
+	my_player.transform.origin = pos
+	get_node("/root/Node/players").add_child(my_player)
+	
+	# Load other players #slave
+	"""
+	for p in player_info:
+		print("slave?")
+		var player = preload("res://objects/KBPlayerCube.tscn").instance()
+		print("peer ID:",str(p))
+		player.set_name(str(p))
+		player.set_network_master(p) #set unique id as master
+		
+		pos = Vector3(round(rand_range(0,5)),5,round(rand_range(0,5)))
+		player.set_pos(pos);
+		get_node("/root/Node/players").add_child(player)
+	
+	"""
+	# Tell server (remember, server is always ID=1) that this peer is done pre-configuring
+	rpc_id(1, "done_preconfiguring", selfPeerID)
+	pass
+
+#master func setup_config_game():
+master func setup_config_game():
+	print("setup game?");
+	assert(get_tree().is_network_server())
+	print("server?");
+	#player_info
+	#rpc("pre_configure_game")
+	var selfPeerID = get_tree().get_network_unique_id()
+	var my_player = preload("res://objects/KBPlayerCube.tscn").instance()
+	my_player.set_name(str(selfPeerID))
+	my_player.set_network_master(selfPeerID) # Will be explained later
+	#var pos = Vector3(round(rand_range(0,3)),5,round(rand_range(0,3)))
+	var pos = Vector3(0,0,0)
+	get_node("/root/Node/players").add_child(my_player)
+	
+	#rpc_id(p, "pre_configure_game",selfPeerID)
+	
+	#for p in player_info:
+		#rpc_id(p, "pre_configure_game",selfPeerID)
+	
+	
+	#get_tree().set_pause(true) # Pre-pause
+	
+	#print("peer ID:",selfPeerID)
+	
+	#print(my_player)
+	
+	#my_player.transform.origin = pos
+	#my_player.position.x = pos.x
+	#my_player.position.z = pos.z
+	#get_node("/root/Node/players").add_child(my_player)
+	#rpc("pre_configure_game")
+	pass
+
+var players_done = []
+
+remote func done_preconfiguring(who):
+	# Here is some checks you can do, as example
+	assert(get_tree().is_network_server())
+	assert(who in player_info) # Exists
+	assert(not who in players_done) # Was not added yet
+
+	players_done.append(who)
+
+	if (players_done.size() == player_info.size()):
+		rpc("post_configure_game")
+
+remote func post_configure_game():
+	get_tree().set_pause(false)
+	# Game starts now!
+
+
+
+
+
+
+
+
+
+
+
+	

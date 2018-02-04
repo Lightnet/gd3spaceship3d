@@ -1,0 +1,28 @@
+{
+    // Show node pathes of of workspace in the code completion
+  "GodotTools.completeNodePath": false,
+
+  // The absolute path of your godot editor
+  "GodotTools.editorPath": "E://Development//Godot3mono//Godot3mono.exe",
+
+  // Turn on/off the syntax checking for GDScript
+  "GodotTools.enableSyntaxChecking": true,
+
+  // Relate path to the godot project
+  "GodotTools.godotProjectRoot": "${workspaceRoot}",
+
+  // The godot version of your project
+  "GodotTools.godotVersion": 3,
+
+  // Only parse variables without indents in GDScript
+  "GodotTools.ignoreIndentedVars": false,
+
+  // Controls the maximum number of problems produced by the server.
+  "GodotTools.maxNumberOfProblems": 100,
+
+  // Parse scene files with extention ends with tscn
+  "GodotTools.parseTextScene": true,
+
+  // Render workspace documentations as markdown content
+  "GodotTools.workspaceDocumentWithMarkdown": false,
+}

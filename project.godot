@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="gd3spaceship3d"
-run/main_scene="res://scenes/scenespaceship.tscn"
+run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
 [autoload]

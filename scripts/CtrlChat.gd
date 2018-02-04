@@ -45,7 +45,7 @@ func _on_BtnSendTest_pressed():
 
 
 func _on_BtnSpawn_pressed():
-	
+	network.setup_config_game()
 	pass # replace with function body
 
 func _on_LineEdit_Chat_text_entered( new_text ):
