@@ -2,7 +2,7 @@
 
   "editor.tabSize": 4,
   "editor.insertSpaces": true,
-  "editor.detectIndentation": true,
+  "editor.detectIndentation": false,
 
     // Show node pathes of of workspace in the code completion
   "GodotTools.completeNodePath": false,

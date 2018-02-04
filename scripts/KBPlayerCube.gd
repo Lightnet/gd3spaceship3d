@@ -86,10 +86,10 @@ func _input(ev):
 	# Print the size of the viewport
 	#print("Viewport Resolution is: ", get_viewport_rect().size)
 	
-	if(Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT)):
+	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
 		#print("->")
 		pass
-	if(Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT)):
+	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):
 		#print("<-")
 		#var hVector = Vector3(0,0,1)
 		pass
