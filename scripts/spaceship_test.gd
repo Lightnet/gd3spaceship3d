@@ -23,6 +23,9 @@ func _physics_process(delta):
 			dir += -cam_xform.basis[2]
 		if Input.is_key_pressed(KEY_S):
 			dir += cam_xform.basis[2]
+		# Godot 2
+		#var axis = self.get_transform().basis.xform(Vector3(1,2,3)).normalized()
+		#self.rotate(axis,angle) 
 			
 		if Input.is_key_pressed(KEY_A):
 			#dir += -cam_xform.basis[0
