@@ -13,7 +13,7 @@ subdivide_depth = 0
 
 extents = Vector3( 0.5, 0.5, 0.5 )
 
-[node name="KinematicBody" type="KinematicBody" index="0"]
+[node name="KinematicBody" type="KinematicBody"]
 
 input_ray_pickable = true
 input_capture_on_drag = false
@@ -27,7 +27,7 @@ axis_lock_angular_y = true
 axis_lock_angular_z = false
 collision/safe_margin = 0.001
 script = ExtResource( 1 )
-_sections_unfolded = [ "Axis Lock", "Transform", "collision" ]
+_sections_unfolded = [ "Axis Lock", "Collision", "Pause", "Transform", "Visibility", "collision" ]
 
 [node name="MeshInstance" type="MeshInstance" parent="." index="0"]
 
@@ -48,6 +48,7 @@ material/0 = null
 
 shape = SubResource( 2 )
 disabled = false
+_sections_unfolded = [ "Pause", "Transform", "Visibility" ]
 
 [node name="Camera" type="Camera" parent="." index="2"]
 

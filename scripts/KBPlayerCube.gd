@@ -3,14 +3,48 @@ extends KinematicBody
 const ACCEL= 2
 const DEACCEL= 4
 const MAX_SPEED = 10
-
 slave var slave_vel = Vector3()
-
 onready var cam = get_node("Camera")
 
+const Status = preload("res://scripts//status.gd") # Relative path
+onready var status = Status.new()
+
+var global = null
+
 func _physics_process(delta):
-    #move(direction * delta)
-	#print("_physics_process")
+	if global.bnetwork:
+		var dir = Vector3() # Where does the player intend to walk to
+		var cam_xform = cam.get_global_transform()
+		if Input.is_key_pressed(KEY_W):
+			dir += -cam_xform.basis[2]
+		if Input.is_key_pressed(KEY_S):
+			dir += cam_xform.basis[2]
+		if Input.is_key_pressed(KEY_A):
+			dir += -cam_xform.basis[0]
+		if Input.is_key_pressed(KEY_D):
+			dir += cam_xform.basis[0]
+		dir.y = 0
+		dir = dir.normalized()
+		var hvel = slave_vel
+		hvel.y = 0
+		var target = dir*MAX_SPEED
+		var accel
+		if dir.dot(hvel) > 0:
+			accel = ACCEL
+		else:
+			accel = DEACCEL
+		hvel = hvel.linear_interpolate(target, accel*delta)
+		slave_vel.x = hvel.x
+		slave_vel.z = hvel.z
+		move_and_collide(slave_vel*delta)
+		pass
+	else:
+		#if !is_network_master.is_valid():
+			#server_move(delta)
+		pass
+	pass
+	
+func server_move(delta):
 	if is_network_master():
 		var dir = Vector3() # Where does the player intend to walk to
 		var cam_xform = cam.get_global_transform()
@@ -41,40 +75,10 @@ func _physics_process(delta):
 	else:
 		pass
 	move_and_collide(slave_vel*delta)
-	pass
 
 func _process(delta):
 	# Called every frame. Delta is time since last frame.
 	# Update game logic here.
-	"""
-	print("_process")
-	var dir = Vector3() # Where does the player intend to walk to
-	var cam_xform = cam.get_global_transform()
-	if Input.is_key_pressed(KEY_W):
-		dir += -cam_xform.basis[2]
-	if Input.is_key_pressed(KEY_S):
-		dir += cam_xform.basis[2]
-	if Input.is_key_pressed(KEY_A):
-		dir += -cam_xform.basis[0]
-	if Input.is_key_pressed(KEY_D):
-		dir += cam_xform.basis[0]
-	dir.y = 0
-	dir = dir.normalized()
-	var hvel = vel
-	hvel.y = 0
-	var target = dir*MAX_SPEED
-	var accel
-	if (dir.dot(hvel) > 0):
-		accel = ACCEL
-	else:
-		accel = DEACCEL
-	hvel = hvel.linear_interpolate(target, accel*delta)
-	vel.x = hvel.x
-	vel.z = hvel.z
-	print(vel)
-	move_and_collide(vel*delta)
-	#move(vel*delta)
-	"""
 	pass
 
 func _input(ev):
@@ -102,10 +106,9 @@ func set_player_name(new_name):
 	pass
 
 func _ready():
+	global = get_node("/root/global")
 	#cam = get_node("Camera"))
 	set_physics_process(true)
 	set_process_input(true)
-	
+	#print(status.health)
 	pass
-
-

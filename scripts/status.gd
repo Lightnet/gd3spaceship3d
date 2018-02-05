@@ -1,11 +1,9 @@
 extends Node
 
-var bnetwork = false
-
-var username = "guest"
-
-var objectives = []
-var quests = []
+var playerid = ""
+var tiles = []
+var health = 100
+var maxhealth = 100
 
 
 func _ready():

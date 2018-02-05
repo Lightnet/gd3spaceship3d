@@ -4,29 +4,29 @@ var ip = "127.0.0.1"
 var SERVER_PORT = 3000
 var chatnode = null
 
+var players_done = []
+
+var global = null
+
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 	get_tree().connect("connection_failed", self, "_connected_fail")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
-	
-	#var chatlog = get_node("Panel/RichTextLabel")
-	#chatlog.set_scroll_follow(true)
-	#pass
+
+	global = get_node("/root/global")
 	
 func create_server():
 	var host = NetworkedMultiplayerENet.new()
 	host.create_server(SERVER_PORT, 4)
 	get_tree().set_network_peer(host)
-	#get_tree().set_meta("network_peer", peer)
 	print("server create")
 
 func connect_client(): 
 	var host = NetworkedMultiplayerENet.new()
 	host.create_client(ip, SERVER_PORT)
 	get_tree().set_network_peer(host)
-	#get_tree().set_meta("network_peer", peer)
 	print("connect client")
 	
 # Player info, associate ID to data
@@ -87,6 +87,7 @@ remote func register_player(id, info):
 	# Call function to update lobby UI here
 
 remote func spawn_player(id):
+    # client
 	var selfPeerID = id
 	var my_player = preload("res://objects/KBPlayerCube.tscn").instance()
 	my_player.set_name(str(selfPeerID))
@@ -95,24 +96,33 @@ remote func spawn_player(id):
 	pass
 
 master func spawn():
-
-	var selfPeerID = get_tree().get_network_unique_id()
-	var my_player = preload("res://objects/KBPlayerCube.tscn").instance()
-	#print(my_player)
-	my_player.set_name(str(selfPeerID))
-	my_player.set_network_master(selfPeerID) # Will be explained later
-
-	my_player.get_node("Camera").current = true
-
-	#var pos = Vector3(round(rand_range(0,5)),5,round(rand_range(0,5)))
-	#var pos = Vector3(0,0,0)
-	#my_player.transform.origin = pos
-	get_node("/root/Node/players").add_child(my_player)
-
-	for p in player_info:
-		print(p)
-		rpc_id(p, "spawn_player", selfPeerID)
-	pass
+	if global.bnetwork:
+		# server
+		var selfPeerID = get_tree().get_network_unique_id()
+		var my_player = preload("res://objects/KBPlayerCube.tscn").instance()
+		#print(my_player)
+		my_player.set_name(str(selfPeerID))
+		my_player.set_network_master(selfPeerID) # Will be explained later
+		my_player.get_node("Camera").current = true #set current user own client
+		#var pos = Vector3(round(rand_range(0,5)),5,round(rand_range(0,5)))
+		#var pos = Vector3(0,0,0)
+		#my_player.transform.origin = pos
+		get_node("/root/Node/players").add_child(my_player)
+	
+		for p in player_info:
+			print(p)
+			rpc_id(p, "spawn_player", selfPeerID)
+		pass
+	else:
+		var my_player = preload("res://objects/KBPlayerCube.tscn").instance()
+		#print(my_player)
+		#my_player.set_name(str(selfPeerID))
+		#my_player.set_network_master(selfPeerID) # Will be explained later
+		my_player.get_node("Camera").current = true #set current user own client
+		#var pos = Vector3(round(rand_range(0,5)),5,round(rand_range(0,5)))
+		#var pos = Vector3(0,0,0)
+		#my_player.transform.origin = pos
+		get_node("/root/Node/players").add_child(my_player)
 
 remote func pre_configure_game(selfPeerID):
 	#get_tree().set_pause(true) # Pre-pause
@@ -154,7 +164,7 @@ remote func pre_configure_game(selfPeerID):
 master func setup_config_game():
 	print("setup game?");
 	assert(get_tree().is_network_server())
-	print("server?");
+	print("server?")
 	#player_info
 	#rpc("pre_configure_game")
 	var selfPeerID = get_tree().get_network_unique_id()
@@ -166,25 +176,17 @@ master func setup_config_game():
 	get_node("/root/Node/players").add_child(my_player)
 	
 	#rpc_id(p, "pre_configure_game",selfPeerID)
-	
 	#for p in player_info:
 		#rpc_id(p, "pre_configure_game",selfPeerID)
-	
-	
 	#get_tree().set_pause(true) # Pre-pause
-	
 	#print("peer ID:",selfPeerID)
-	
 	#print(my_player)
-	
 	#my_player.transform.origin = pos
 	#my_player.position.x = pos.x
 	#my_player.position.z = pos.z
 	#get_node("/root/Node/players").add_child(my_player)
 	#rpc("pre_configure_game")
 	pass
-
-var players_done = []
 
 remote func done_preconfiguring(who):
 	# Here is some checks you can do, as example
@@ -200,6 +202,7 @@ remote func done_preconfiguring(who):
 remote func post_configure_game():
 	get_tree().set_pause(false)
 	# Game starts now!
+	pass
 
 
 
