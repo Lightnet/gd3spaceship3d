@@ -54,3 +54,9 @@ func _on_LineEdit_Chat_text_entered( new_text ):
 	chatlog.append_bbcode(new_text + "\n")
 	network.chatmessage(new_text)
 	pass # replace with function body
+
+
+func _on_BtnSpawn2_pressed():
+	var pos = Vector3(round(rand_range(0,3)),0,round(rand_range(0,3)))
+	print(pos)
+	pass # replace with function body

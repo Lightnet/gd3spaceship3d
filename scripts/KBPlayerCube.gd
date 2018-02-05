@@ -9,10 +9,12 @@ onready var cam = get_node("Camera")
 const Status = preload("res://scripts//status.gd") # Relative path
 onready var status = Status.new()
 
+const projectile = preload("res://objects/RBSphereProjectile.tscn")
+
 var global = null
 
 func _physics_process(delta):
-	if global.bnetwork:
+	if global.bnetwork == false:
 		var dir = Vector3() # Where does the player intend to walk to
 		var cam_xform = cam.get_global_transform()
 		if Input.is_key_pressed(KEY_W):
@@ -98,6 +100,24 @@ func _input(ev):
 		#var hVector = Vector3(0,0,1)
 		pass
 		#self.move(hVector)
+	if Input.is_key_pressed(KEY_SPACE):
+		var cam_xform = cam.get_global_transform()
+		var face = -cam_xform.basis[2]
+		face.y = 0
+		face = face.normalized()
+		var target = face*MAX_SPEED
+		
+		var objprojectile = projectile.instance()
+		objprojectile.transform.origin = transform.origin + target
+		
+		
+		get_node("/root/Node").add_child(objprojectile)
+		
+		
+		print(face)
+		
+		
+		pass
 	
 	pass
 

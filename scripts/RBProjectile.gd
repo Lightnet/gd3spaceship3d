@@ -7,7 +7,6 @@ extends RigidBody
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	set_physics_process(true)
 	pass
 
 #func _process(delta):
@@ -15,16 +14,8 @@ func _ready():
 #	# Update game logic here.
 #	pass
 
-func _physics_process(delta):
-	#print("_physics_process")
-	#if self.():
-		#print (self.get_collider().get_name())
-	pass
 
-func _on_RigidBody_body_entered( body ):
-	#var collision_position = local_collision_pos + get_translation()
-	#print(collision_position)
-	
+func _on_SphereProjecile_body_entered( body ):
 	#body.get
 	print(body.get_name())
 	print("hit?")
