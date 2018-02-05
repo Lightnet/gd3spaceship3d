@@ -45,6 +45,11 @@ func _on_BtnSendTest_pressed():
 func _on_BtnSpawn_pressed():
 	#network.setup_config_game()
 	network.spawn()
+	#self.set_focus_mode(FOCUS_NONE)
+	#release_focus()
+	#grab_focus()
+	get_node("BtnSpawn").set_focus_mode(FOCUS_NONE)
+	
 	pass # replace with function body
 
 func _on_LineEdit_Chat_text_entered( new_text ):

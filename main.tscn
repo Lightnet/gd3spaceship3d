@@ -21,6 +21,7 @@ subdivide_depth = 0
 
 [node name="Spatial" type="Spatial" parent="." index="1"]
 
+editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }

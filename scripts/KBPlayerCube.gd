@@ -4,14 +4,14 @@ const ACCEL= 2
 const DEACCEL= 4
 const MAX_SPEED = 10
 slave var slave_vel = Vector3()
-onready var cam = get_node("Camera")
 
+onready var cam = get_node("Camera")
 const Status = preload("res://scripts//status.gd") # Relative path
 onready var status = Status.new()
-
 const projectile = preload("res://objects/RBSphereProjectile.tscn")
-
 var global = null
+
+var bfirepress = false
 
 func _physics_process(delta):
 	if global.bnetwork == false:
@@ -101,21 +101,23 @@ func _input(ev):
 		pass
 		#self.move(hVector)
 	if Input.is_key_pressed(KEY_SPACE):
-		var cam_xform = cam.get_global_transform()
-		var face = -cam_xform.basis[2]
-		face.y = 0
-		face = face.normalized()
-		var target = face*MAX_SPEED
-		
-		var objprojectile = projectile.instance()
-		objprojectile.transform.origin = transform.origin + target
-		
-		
-		get_node("/root/Node").add_child(objprojectile)
-		
-		
-		print(face)
-		
+		if bfirepress == false:
+			bfirepress = true
+			var cam_xform = cam.get_global_transform()
+			var face = -cam_xform.basis[2]
+			face.y = 0
+			face = face.normalized()
+			#var target = face*MAX_SPEED
+			var target = face*2
+			
+			var objprojectile = projectile.instance()
+			objprojectile.transform.origin = transform.origin + target
+			objprojectile.apply_impulse(transform.origin,target*10)
+			
+			get_node("/root/Node").add_child(objprojectile)
+			print(face)
+	else:
+		bfirepress = false
 		
 		pass
 	
