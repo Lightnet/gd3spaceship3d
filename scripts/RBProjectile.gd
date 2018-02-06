@@ -1,8 +1,6 @@
 extends RigidBody
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+var damage = 10
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -17,7 +15,14 @@ func _ready():
 
 func _on_SphereProjecile_body_entered( body ):
 	#body.get
+	print("====================")
 	print(body.get_name())
 	print("hit?")
+	if body.get_name() == "KBPlayerShipCubeBot":
+		if body.has_method("onDamage"):
+			body.onDamage(damage)
+			queue_free()
+		pass
+		
 	#queue_free()
 	pass # replace with function body

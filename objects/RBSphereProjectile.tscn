@@ -14,7 +14,7 @@ radial_segments = 64
 rings = 32
 is_hemisphere = false
 
-[node name="RBSphereProjectile" type="RigidBody" index="0"]
+[node name="RBSphereProjectile" type="RigidBody"]
 
 input_ray_pickable = false
 input_capture_on_drag = false

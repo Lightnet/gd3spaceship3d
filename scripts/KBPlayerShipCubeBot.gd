@@ -138,3 +138,10 @@ func _ready():
 	set_process_input(true)
 	#print(status.health)
 	pass
+	
+func onDamage(value):
+	status.health -= value
+	if status.health <= 0:
+		queue_free()
+	print(status.health)
+	

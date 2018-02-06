@@ -12,7 +12,6 @@ const projectile = preload("res://objects/RBSphereProjectile.tscn")
 var global = null
 
 var bfirepress = false
-
 var bcontroller = true
 
 func _physics_process(delta):
