@@ -25,8 +25,8 @@ func _physics_process(delta):
 	var results = state.intersect_shape(params, 2)
 
     if results.size() != 0:
-		print(results[0])
-        #if results[0].collider.get_name() == get_name() :
+        print(results[0])
+        if results[0].collider.get_name() == get_name():
             print("found!")
 
 ```
