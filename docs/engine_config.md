@@ -4,9 +4,16 @@
 
 user://config.cfg
 
+
+Current user AppData settings/configs files.
+
 ```
 C:\Users\<username>\AppData\Roaming\Godot\app_userdata\gd3spaceship3d
 
 ```
 
 
+Current project work space.
+```
+res://
+```

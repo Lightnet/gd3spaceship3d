@@ -11,7 +11,9 @@ func _input(event):
 	if event is InputEventMouseButton:
 		print("press")
 		var cam_xform = get_global_transform()
-		var face = -cam_xform.basis[2]
+		#face forward normal direction
+		#var face = -cam_xform.basis[2]
+		var face = cam_xform.basis[2]
 		face.y = 0
 		face = face.normalized()
 		var target = face*3
@@ -45,9 +47,12 @@ func _process(delta):
 			#print(hit.position)
 			point.transform.origin = hit.position
 			dir = (hit.position - get_global_transform().origin).normalized()
+			#settings face dir*-1 
+			var face = dir*-1
 			#dir = (get_global_transform().origin - hit.position).normalized()
 			#print(dir)
-			look_at(dir,Vector3(0,1,0))
+			look_at(face,Vector3(0,1,0))
+			
 		pass
 
 func _ready():

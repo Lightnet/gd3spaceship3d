@@ -13,7 +13,7 @@ subdivide_width = 0
 subdivide_height = 0
 subdivide_depth = 0
 
-[node name="RigidBody" type="RigidBody"]
+[node name="RBCube" type="RigidBody" index="0"]
 
 input_ray_pickable = true
 input_capture_on_drag = false

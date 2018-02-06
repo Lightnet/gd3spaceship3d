@@ -20,6 +20,10 @@ global="*res://scripts/global.gd"
 settings="*res://scripts/settings.gd"
 network="*res://scripts/network.gd"
 
+[physics]
+
+3d/default_gravity_vector=Vector3( 0, 0, 0 )
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"
