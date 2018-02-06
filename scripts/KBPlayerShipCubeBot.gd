@@ -13,7 +13,7 @@ var global = null
 
 var bfirepress = false
 
-var bcontroller = true
+var bcontroller = false
 
 func _physics_process(delta):
 	if global.bnetwork == false and bcontroller == true:
@@ -93,6 +93,8 @@ func _input(ev):
 		#print("Mouse Motion at: ",ev.position)
 	# Print the size of the viewport
 	#print("Viewport Resolution is: ", get_viewport_rect().size)
+	if bcontroller == false:
+		return
 	
 	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
 		#print("->")
