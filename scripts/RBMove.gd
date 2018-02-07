@@ -8,8 +8,7 @@ slave var slave_vel = Vector3()
 var excludes = []
 
 func _ready():
-	print("get_rid:",get_rid())
-	
+	#print("get_rid:",get_rid())
 	excludes.append(get_rid())
 	pass
 
@@ -73,15 +72,11 @@ func _physics_process(delta):
 			#excludes.append(results[0].collider_id)
 			#excludes.append(results[0].rid)
 			#pass
-		
 		pass
-	
-	
 
 func _on_RigidBody_body_entered( body ):
 	print("hit body...")
 	pass # replace with function body
-
 
 func _on_RigidBody_body_shape_entered( body_id, body, body_shape, local_shape ):
 	print("hit shape body...")
