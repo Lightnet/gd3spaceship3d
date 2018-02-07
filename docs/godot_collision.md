@@ -3,6 +3,10 @@
 
 # Collision Physics 3D
 
+ There couple of way of collision detects. One is layer and mask. Two groups tag names. Three using the ray cast types. But it depend on the coding the right ways and knowing which works the best. There no wrong and right to handle collision to detect them. It just how much loop to reduce time to detect collision.
+
+
+
 ```
 var excludes = []
 
@@ -33,6 +37,11 @@ func _physics_process(delta):
 
 # Links:
  * https://github.com/godotengine/godot/issues/2217
+ * https://github.com/godotengine/godot/issues/14883
+ * https://godotengine.org/qa/4010/whats-difference-between-collision-layers-collision-masks
+ * https://www.reddit.com/r/godot/comments/7de32n/help_with_collision_masks_and_layers/
+ * http://docs.godotengine.org/en/3.0/classes/class_physicsbody.html?highlight=set_collision_mask_bit
+
 
 # Notes:
  * Took a while to find the correct way to used script collision.

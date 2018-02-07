@@ -77,7 +77,8 @@ func _physics_process(delta):
 	#if excludes != null:
     #   params.set_exclude(excludes) # here exclude is an array of... RID??
 	params.set_exclude(excludes) # here exclude is an array of... RID??
-		
+	
+	#set_collision_layer_bit(
 	
 	
 	#params.set_collision_mask(2)
