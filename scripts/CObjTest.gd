@@ -20,6 +20,11 @@ func _on_Button_pressed():
 	var player = get_node("../../Spatial/RigidBodyPlayer")
 	print(player.get_name())
 	#print(player.get_collision_layer_bit(0))
-	print(player.get_collision_layer_bit(1))
+	#print(player.get_collision_layer_bit(1))
+	
+	#print(player.get_property_list())
+	
+	var shape = get_node("../../Spatial/RigidBodyPlayer/CollisionShape")
+	print(shape.get_property_list())
 	
 	pass # replace with function body

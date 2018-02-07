@@ -44,47 +44,27 @@ func _physics_process(delta):
 	slave_vel.z = hvel.z
 	#move_and_collide(slave_vel*delta)
 	apply_impulse(transform.origin,slave_vel)
+	
 	var space_state = get_world().get_direct_space_state()
-	
-	
-	#var params = PhysicsShapeQueryParameters
-	#params.set_shape(get_node("CollisionShape").get_shape())
 	#params.set_transform(get_transform().translated(transform.origin)) # same transform as parent, just translate
 	#params.set_motion(slave_vel*5) # is "motion" the sweep distance?
-	#var space_state = get_world().get_direct_space_state(params,1)
-	
-	#var results = space_state.collide_shape(PhysicsShapeQueryParameters,1)
-	#var results = space_state.collide_shape(get_node("CollisionShape").shape_owner_get_shape(),1)
-	#var results = space_state.collide_shape(get_node("CollisionShape").get_shape(),1)
-	#var results = space_state.collide_shape(get_shape(),1)
-	
-	#var params = PhysicsShapeQueryParameters.new()
-	#params.set_shape(get_node("CollisionShape").get_shape())
-	
-	#var results = space_state.collide_shape(params, 1)
-	#if results.size() != 0:
-		#print("hit?")
-		
-		
 	var sphere = SphereShape.new()
 	sphere.radius = 1
 	var params = PhysicsShapeQueryParameters.new()
-	params.set_shape(sphere)
+	#params.set_shape(sphere)
 	#params.set_transform(get_transform().translated(transform.origin)) # same transform as parent, just translate
-	
 	params.set_transform(get_transform())  #work
-	
 	#if excludes != null:
     #   params.set_exclude(excludes) # here exclude is an array of... RID??
 	params.set_exclude(excludes) # here exclude is an array of... RID??
-	
-	#set_collision_layer_bit(
-	
-	
 	#params.set_collision_mask(2)
 	var state = get_world().get_direct_space_state()
+	#var cshape = get_node("CollisionShape").get_shape()
+	#params.set_shape(sphere)
+	#params.set_shape(cshape)
+	
+	params.set_shape(get_node("CollisionShape").get_shape())
 	var results = state.intersect_shape(params, 2)
-	#var results = state.collide_shape(params, 26)
 	#print(results.size())
 	if results.size() != 0:
 		print(results[0])
