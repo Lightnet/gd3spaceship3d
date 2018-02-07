@@ -1,6 +1,15 @@
 #godot inputs:
  * https://godotengine.org/qa/17381/how-to-use-get_button_index-in-godot-3-0-alpha
+ * http://docs.godotengine.org/en/stable/learning/features/gui/custom_gui_controls.html?highlight=button_left
  * 
+
+```
+func _input(ev):
+    if ev.pressed:
+        pass
+
+```
+
 
 
 ```GDScript
