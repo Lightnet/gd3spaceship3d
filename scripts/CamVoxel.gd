@@ -7,11 +7,20 @@ var ray_length = 10
 var point
 var ROT_SPEED = 0.1
 var bhit = false
+var bdelete = false
 
 var placeposition = Vector3(0,0,0)
 
 var label01
 var label02
+var label03
+var label04
+
+var blockhit
+
+var bdragmouse = false
+var mouseposition_1 = Vector2(0,0)
+var mouseposition_2 = Vector2(0,0)
 
 func _ready():
 	# Called every time the node is added to the scene.
@@ -19,7 +28,9 @@ func _ready():
 	point = get_node("../MeshInstance")
 	label01 = get_node("../../Control/Label")
 	label02 = get_node("../../Control/Label2")
-	pass
+	label03 = get_node("../../Control/Label3")
+	label04 = get_node("../../Control/Label4")
+	#pass
 
 func _input(ev):
 	#print(ev)
@@ -50,6 +61,7 @@ func _input(ev):
 			bhit = true
 			#print("?")
 			#print(result)
+			blockhit = result.collider
 			#result.normal
 			pos = result.position
 			label01.set_text("Normal x:" + String(result.normal.x)+" y:" + String(result.normal.y) +" x:" + String(result.normal.z))
@@ -58,24 +70,52 @@ func _input(ev):
 			pos.y = round(pos.y)
 			pos.z = round(pos.z)
 			if result.normal.x != 0:
-				pos.x = round(pos.x) + result.normal.x * 1
+				pos.x = round(pos.x) #+ result.normal.x * 1
 			if result.normal.y != 0:
-				pos.y = round(pos.y) + result.normal.y * 1
+				pos.y = round(pos.y) #+ result.normal.y * 1
 			if result.normal.z != 0:
-				pos.z = round(pos.z) + result.normal.z * 1
-			print(pos)
+				pos.z = round(pos.z) #+ result.normal.z * 1
+			#print(pos)
 		#point.transform.origin = to
 		if bhit:
 			placeposition = pos
-			pass
+			#pass
+		else:
+			pos.x = round(pos.x)
+			pos.y = round(pos.y)
+			pos.z = round(pos.z)
+			placeposition = pos
 		point.transform.origin = pos
+		label03.set_text("Snap x:" + String(pos.x)+" y:" + String(pos.y) +" x:" + String(pos.z))
 		#print("Move")
 		
+		if bdragmouse:
+			mouseposition_2 = ev.position
+			#print("?")
+			var dragx = mouseposition_2.x - mouseposition_1.x
+			var dragy = mouseposition_2.y - mouseposition_1.y
+			print(dragx)
+			if dragx != 0:
+				rotate(Vector3(0, 1, 0), deg2rad(dragx * 0.01))
+				#rotate_y(dragx * 0.01)
+				pass
+			if dragy != 0:
+				#rotate(Vector3(0, 0, 1), deg2rad(dragy * 0.01))
+				#rotate_z(dragx * 0.01)
+				rotate_object_local(Vector3(1, 0, 0),deg2rad(dragy * 0.01))#ok
+				#rotate_object_local(Vector3(0, 0, 1),dragx * 0.01)
+				pass
+			#pass
 		
-		
-	#point.transform.origin = point
-	#print(to)
-
+	if Input.is_key_pressed(KEY_B):
+		if bdelete:
+			bdelete = false
+			label04.set_text("Create Block")
+		else:
+			bdelete = true
+			label04.set_text("Delete Block")
+	
+	
 	var dir = Vector3() # Where does the player intend to walk to
 	var cam_xform = get_global_transform() #forward direction
 	if Input.is_key_pressed(KEY_W):
@@ -95,10 +135,36 @@ func _input(ev):
 	if ev is InputEventMouseButton:
 		if ev.button_index == BUTTON_LEFT and ev.pressed:
 			print("LEFT MOUSE PRESS")
-			
-			var objvoxel = BlockVoxel.instance()
-			objvoxel.transform.origin = placeposition
-			get_node("/root/Node/Spatial").add_child(objvoxel)
-			
+			#if bhit:
+			if true:
+				if bdelete:
+					print("delete")
+					if blockhit !=null:
+						blockhit.queue_free()
+					pass
+				else:
+					print("create")
+					print(placeposition)
+					var objvoxel = BlockVoxel.instance()
+					objvoxel.transform.origin = placeposition
+					get_node("/root/Node/Spatial").add_child(objvoxel)
+			#pass
+		#pass
+		if ev.button_index == BUTTON_RIGHT and ev.is_pressed():
+			mouseposition_1 = ev.position
+			bdragmouse = true
+			#print("press")
+			#pass
+		if ev.button_index == BUTTON_RIGHT and !ev.is_pressed() :
+			bdragmouse = false
+			#print("release")
 			pass
-		pass
+		
+			
+			
+			
+			
+			
+			
+			
+			

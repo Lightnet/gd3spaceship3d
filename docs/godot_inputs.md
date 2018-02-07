@@ -7,7 +7,10 @@
 func _input(ev):
     if ev.pressed:
         pass
-
+    if !ev.is_pressed(): # false > release
+        pass
+    if ev.is_pressed(): # true > press
+        pass
 ```
 
 

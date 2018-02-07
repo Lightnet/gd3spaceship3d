@@ -64,3 +64,6 @@ func _input(event):
         if event.button_index == BUTTON_WHEEL_UP:
 
 ```
+
+# Links:
+ * http://docs.godotengine.org/en/stable/learning/features/math/matrices_and_transforms.html
