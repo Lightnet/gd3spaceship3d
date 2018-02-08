@@ -18,3 +18,7 @@
 # Notes:
  * When running multiplayers run Godot and Viusal Studio Code or batch command to run two applications.
 
+
+# Multiple Licenses:
+ * MIT > Godot Engine 3.0  
+ * 

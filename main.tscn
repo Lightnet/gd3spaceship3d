@@ -47,7 +47,6 @@ __meta__ = {
 
 [node name="Floor" type="StaticBody" parent="Spatial" index="1"]
 
-editor/display_folded = true
 transform = Transform( 10, 0, 0, 0, 1, 0, 0, 0, 10, 0, -2, 0 )
 input_ray_pickable = true
 input_capture_on_drag = false

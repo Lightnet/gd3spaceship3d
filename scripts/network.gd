@@ -96,9 +96,13 @@ remote func spawn_player(id):
 	pass
 
 master func spawn():
-	if global.bnetwork:
-		# server
-		var selfPeerID = get_tree().get_network_unique_id()
+	global.bnetwork = false
+	
+	
+	
+	if get_tree().has_network_peer():
+		print("server")
+		var selfPeerID = get_tree().get_network_unique_id()	
 		var my_player = preload("res://objects/KBPlayerCube.tscn").instance()
 		#print(my_player)
 		my_player.set_name(str(selfPeerID))
@@ -114,6 +118,7 @@ master func spawn():
 			rpc_id(p, "spawn_player", selfPeerID)
 		pass
 	else:
+		print("stand alone")
 		var my_player = preload("res://objects/KBPlayerCube.tscn").instance()
 		#print(my_player)
 		#my_player.set_name(str(selfPeerID))

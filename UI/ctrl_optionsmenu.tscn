@@ -103,10 +103,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 30.0
-margin_right = -10.0
-margin_bottom = -10.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -124,6 +124,7 @@ anchor_bottom = 0.0
 margin_right = 480.0
 margin_bottom = 230.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
@@ -140,7 +141,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 465.0
-margin_bottom = 140.0
+margin_bottom = 128.0
 rect_min_size = Vector2( 465, 0 )
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
@@ -150,9 +151,8 @@ size_flags_vertical = 1
 alignment = 0
 _sections_unfolded = [ "Rect" ]
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="0"]
+[node name="HBoxContainer_Game" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="0"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -166,7 +166,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 1
 
-[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer" index="0"]
+[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_Game" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -186,7 +186,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Button" type="Button" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer" index="1"]
+[node name="MenuButton" type="MenuButton" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_Game" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -202,16 +202,17 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 toggle_mode = false
+action_mode = 0
 enabled_focus_mode = 2
 shortcut = null
 group = null
 text = "Normal"
 flat = false
 align = 1
+items = [  ]
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="1"]
+[node name="HBoxContainer_language" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="1"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -226,7 +227,7 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 1
 
-[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer2" index="0"]
+[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_language" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -246,7 +247,7 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Button" type="Button" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer2" index="1"]
+[node name="MenuButton" type="MenuButton" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_language" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -262,23 +263,24 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 toggle_mode = false
+action_mode = 0
 enabled_focus_mode = 2
 shortcut = null
 group = null
 text = "English"
 flat = false
 align = 1
+items = [  ]
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="2"]
+[node name="HBoxContainer_subtitle" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="2"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 48.0
 margin_right = 465.0
-margin_bottom = 68.0
+margin_bottom = 72.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
 mouse_default_cursor_shape = 0
@@ -286,16 +288,16 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 1
 
-[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer3" index="0"]
+[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_subtitle" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 176.0
-margin_top = 3.0
-margin_right = 225.0
-margin_bottom = 17.0
+margin_left = 194.0
+margin_top = 5.0
+margin_right = 243.0
+margin_bottom = 19.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
@@ -306,39 +308,37 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Button" type="Button" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer3" index="1"]
+[node name="CheckButton" type="CheckBox" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_subtitle" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 229.0
-margin_right = 288.0
-margin_bottom = 20.0
+margin_left = 247.0
+margin_right = 271.0
+margin_bottom = 24.0
 rect_pivot_offset = Vector2( 0, 0 )
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-toggle_mode = false
+toggle_mode = true
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Normal"
 flat = false
 align = 1
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="3"]
+[node name="HBoxContainer_skipscene" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="3"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 72.0
+margin_top = 76.0
 margin_right = 465.0
-margin_bottom = 92.0
+margin_bottom = 100.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
 mouse_default_cursor_shape = 0
@@ -346,16 +346,16 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 1
 
-[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer4" index="0"]
+[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_skipscene" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 154.0
-margin_top = 3.0
-margin_right = 247.0
-margin_bottom = 17.0
+margin_left = 172.0
+margin_top = 5.0
+margin_right = 265.0
+margin_bottom = 19.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
@@ -366,15 +366,15 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Button" type="Button" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer4" index="1"]
+[node name="Button" type="CheckBox" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_skipscene" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 251.0
-margin_right = 310.0
-margin_bottom = 20.0
+margin_left = 269.0
+margin_right = 293.0
+margin_bottom = 24.0
 rect_pivot_offset = Vector2( 0, 0 )
 focus_mode = 2
 mouse_filter = 0
@@ -385,19 +385,19 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Normal"
 flat = false
 align = 1
 
-[node name="HBoxContainer5" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="4"]
+[node name="HBoxContainer_disable_talk" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="4"]
 
+visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 96.0
+margin_top = 104.0
 margin_right = 465.0
-margin_bottom = 116.0
+margin_bottom = 128.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
 mouse_default_cursor_shape = 0
@@ -405,16 +405,16 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 1
 
-[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer5" index="0"]
+[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_disable_talk" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 147.0
-margin_top = 3.0
-margin_right = 254.0
-margin_bottom = 17.0
+margin_left = 165.0
+margin_top = 5.0
+margin_right = 272.0
+margin_bottom = 19.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
@@ -425,15 +425,15 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Button" type="Button" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer5" index="1"]
+[node name="Button" type="CheckBox" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_disable_talk" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 258.0
-margin_right = 317.0
-margin_bottom = 20.0
+margin_left = 276.0
+margin_right = 300.0
+margin_bottom = 24.0
 rect_pivot_offset = Vector2( 0, 0 )
 focus_mode = 2
 mouse_filter = 0
@@ -444,19 +444,18 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Normal"
 flat = false
 align = 1
 
-[node name="HBoxContainer6" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="5"]
+[node name="HBoxContainer_simplemenu" type="HBoxContainer" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer" index="5"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 120.0
+margin_top = 104.0
 margin_right = 465.0
-margin_bottom = 140.0
+margin_bottom = 128.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
 mouse_default_cursor_shape = 0
@@ -464,16 +463,16 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 1
 
-[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer6" index="0"]
+[node name="Label" type="Label" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_simplemenu" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 159.0
-margin_top = 3.0
-margin_right = 243.0
-margin_bottom = 17.0
+margin_left = 176.0
+margin_top = 5.0
+margin_right = 260.0
+margin_bottom = 19.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 2
 mouse_default_cursor_shape = 0
@@ -484,15 +483,15 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="Button" type="Button" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer6" index="1"]
+[node name="Button" type="CheckBox" parent="Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_simplemenu" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 247.0
-margin_right = 306.0
-margin_bottom = 20.0
+margin_left = 264.0
+margin_right = 288.0
+margin_bottom = 24.0
 rect_pivot_offset = Vector2( 0, 0 )
 focus_mode = 2
 mouse_filter = 0
@@ -503,7 +502,6 @@ toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 group = null
-text = "Normal"
 flat = false
 align = 1
 
@@ -515,10 +513,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 40.0
-margin_right = -10.0
-margin_bottom = -10.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -536,6 +534,7 @@ anchor_bottom = 0.0
 margin_right = 480.0
 margin_bottom = 220.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
@@ -552,7 +551,7 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 367.0
+margin_right = 351.0
 margin_bottom = 108.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 1
@@ -956,6 +955,7 @@ margin_top = -2.0
 margin_right = 486.0
 margin_bottom = 228.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
@@ -1719,6 +1719,7 @@ margin_top = -2.0
 margin_right = 486.0
 margin_bottom = 228.0
 rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
@@ -2450,6 +2451,56 @@ text = "Normal"
 flat = false
 align = 1
 
+[node name="BtnApply" type="Button" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 90.0
+margin_top = 360.0
+margin_right = 200.0
+margin_bottom = 390.0
+rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Apply"
+flat = false
+align = 1
+
+[node name="BtnDefault" type="Button" parent="." index="4"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 500.0
+margin_top = 360.0
+margin_right = 610.0
+margin_bottom = 390.0
+rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Default"
+flat = false
+align = 1
+
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+
+[connection signal="pressed" from="BtnApply" to="." method="_on_BtnApply_pressed"]
 
 

@@ -14,71 +14,50 @@ var global = null
 var bfirepress = false
 var bcontroller = true
 
-func _physics_process(delta):
-	if global.bnetwork == false and bcontroller == true:
-		var dir = Vector3() # Where does the player intend to walk to
-		var cam_xform = cam.get_global_transform()
-		if Input.is_key_pressed(KEY_W):
-			dir += -cam_xform.basis[2]
-		if Input.is_key_pressed(KEY_S):
-			dir += cam_xform.basis[2]
-		if Input.is_key_pressed(KEY_A):
-			dir += -cam_xform.basis[0]
-		if Input.is_key_pressed(KEY_D):
-			dir += cam_xform.basis[0]
-		dir.y = 0
-		dir = dir.normalized()
-		var hvel = slave_vel
-		hvel.y = 0
-		var target = dir*MAX_SPEED
-		var accel
-		if dir.dot(hvel) > 0:
-			accel = ACCEL
-		else:
-			accel = DEACCEL
-		hvel = hvel.linear_interpolate(target, accel*delta)
-		slave_vel.x = hvel.x
-		slave_vel.z = hvel.z
-		move_and_collide(slave_vel*delta)
-		pass
+func movecheck(delta):
+	var dir = Vector3() # Where does the player intend to walk to
+	var cam_xform = cam.get_global_transform()
+	if Input.is_key_pressed(KEY_W):
+		dir += -cam_xform.basis[2]
+	if Input.is_key_pressed(KEY_S):
+		dir += cam_xform.basis[2]
+	if Input.is_key_pressed(KEY_A):
+		dir += -cam_xform.basis[0]
+	if Input.is_key_pressed(KEY_D):
+		dir += cam_xform.basis[0]
+	dir.y = 0
+	dir = dir.normalized()
+	var hvel = slave_vel
+	hvel.y = 0
+	var target = dir*MAX_SPEED
+	var accel
+	if dir.dot(hvel) > 0:
+		accel = ACCEL
 	else:
-		#if !is_network_master.is_valid():
-			#server_move(delta)
-		pass
+		accel = DEACCEL
+	hvel = hvel.linear_interpolate(target, accel*delta)
+	slave_vel.x = hvel.x
+	slave_vel.z = hvel.z
+
+func _physics_process(delta):
+	#print(get_tree().has_network_peer())
+	if get_tree().has_network_peer() == false and bcontroller == true:
+		movecheck(delta)
+		#move_and_collide(slave_vel*delta)
+		#pass
+	if get_tree().has_network_peer():
+		server_move(delta)
+		#pass
+	move_and_collide(slave_vel*delta)
 	pass
 	
 func server_move(delta):
 	if is_network_master():
-		var dir = Vector3() # Where does the player intend to walk to
-		var cam_xform = cam.get_global_transform()
-		if Input.is_key_pressed(KEY_W):
-			dir += -cam_xform.basis[2]
-		if Input.is_key_pressed(KEY_S):
-			dir += cam_xform.basis[2]
-		if Input.is_key_pressed(KEY_A):
-			dir += -cam_xform.basis[0]
-		if Input.is_key_pressed(KEY_D):
-			dir += cam_xform.basis[0]
-		dir.y = 0
-		dir = dir.normalized()
-		var hvel = slave_vel
-		hvel.y = 0
-		var target = dir*MAX_SPEED
-		var accel
-		if dir.dot(hvel) > 0:
-			accel = ACCEL
-		else:
-			accel = DEACCEL
-		hvel = hvel.linear_interpolate(target, accel*delta)
-		slave_vel.x = hvel.x
-		slave_vel.z = hvel.z
+		movecheck(delta)
 		#print(slave_vel)
 		rset("slave_vel", slave_vel)
-		#move(slave_vel*delta)
-	else:
-		pass
-	move_and_collide(slave_vel*delta)
-
+	#move_and_collide(slave_vel*delta)
+	
 func _process(delta):
 	# Called every frame. Delta is time since last frame.
 	# Update game logic here.
@@ -94,7 +73,6 @@ func _input(ev):
 	#print("Viewport Resolution is: ", get_viewport_rect().size)
 	if bcontroller == false:
 		return
-	
 	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT):
 		#print("->")
 		pass
@@ -112,24 +90,20 @@ func _input(ev):
 			face = face.normalized()
 			#var target = face*MAX_SPEED
 			var target = face*2
-			
 			var objprojectile = projectile.instance()
 			objprojectile.transform.origin = transform.origin + target
 			objprojectile.apply_impulse(transform.origin,target*10)
-			
 			get_node("/root/Node").add_child(objprojectile)
 			print(face)
 	else:
 		bfirepress = false
-		
 		pass
-	
 	pass
-
+	
 func set_player_name(new_name):
 	#get_node("label").set_text(new_name)
 	pass
-
+	
 func _ready():
 	global = get_node("/root/global")
 	#cam = get_node("Camera"))

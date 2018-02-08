@@ -1,21 +1,34 @@
 extends Control
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+var config
+
+var game_difficulty
+var popup
 
 func _ready():
-	# Called every time the node is added to the scene.
-	# Initialization here
+	config = get_node("/root/settings")
+	
+	game_difficulty = get_node("Panel/TabContainer/Game/VScrollBar/VBoxContainer/HBoxContainer_Game/MenuButton")
+	
+	popup = game_difficulty.get_popup()
+	popup.add_item("Normal")
+	popup.add_item("Hard")
+	popup.connect("id_pressed", self, "_on_item_pressed")
+	#pass
+
+func _on_item_pressed(ID):
+	var pop  = game_difficulty.get_popup()
+	print(pop.get_item_text(ID))
+	print("ID:"+String(ID))
+	print("press")
 	pass
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
-
-
+	
 func _on_Button_pressed():
 	hide()
 	get_parent().get_node("ctrl_mainmenu").show()
-	pass # replace with function body
+	
+func _on_BtnApply_pressed():
+	#config = get_node("/root/settings")
+	#print(config)
+	print(config._settings.profile.username)
+	#pass

@@ -10,74 +10,51 @@ const Status = preload("res://scripts//status.gd") # Relative path
 onready var status = Status.new()
 const projectile = preload("res://objects/RBSphereProjectile.tscn")
 var global = null
-
 var bfirepress = false
-
 var bcontroller = true
 
-func _physics_process(delta):
-	if global.bnetwork == false and bcontroller == true:
-		var dir = Vector3() # Where does the player intend to walk to
-		var cam_xform = cam.get_global_transform()
-		if Input.is_key_pressed(KEY_W):
-			dir += -cam_xform.basis[2]
-		if Input.is_key_pressed(KEY_S):
-			dir += cam_xform.basis[2]
-		if Input.is_key_pressed(KEY_A):
-			dir += -cam_xform.basis[0]
-		if Input.is_key_pressed(KEY_D):
-			dir += cam_xform.basis[0]
-		dir.y = 0
-		dir = dir.normalized()
-		var hvel = slave_vel
-		hvel.y = 0
-		var target = dir*MAX_SPEED
-		var accel
-		if dir.dot(hvel) > 0:
-			accel = ACCEL
-		else:
-			accel = DEACCEL
-		hvel = hvel.linear_interpolate(target, accel*delta)
-		slave_vel.x = hvel.x
-		slave_vel.z = hvel.z
-		move_and_collide(slave_vel*delta)
-		pass
+func movecheck(delta):
+	var dir = Vector3() # Where does the player intend to walk to
+	var cam_xform = cam.get_global_transform()
+	if Input.is_key_pressed(KEY_W):
+		dir += -cam_xform.basis[2]
+	if Input.is_key_pressed(KEY_S):
+		dir += cam_xform.basis[2]
+	if Input.is_key_pressed(KEY_A):
+		dir += -cam_xform.basis[0]
+	if Input.is_key_pressed(KEY_D):
+		dir += cam_xform.basis[0]
+	dir.y = 0
+	dir = dir.normalized()
+	var hvel = slave_vel
+	hvel.y = 0
+	var target = dir*MAX_SPEED
+	var accel
+	if dir.dot(hvel) > 0:
+		accel = ACCEL
 	else:
-		#if !is_network_master.is_valid():
-			#server_move(delta)
-		pass
-	pass
+		accel = DEACCEL
+	hvel = hvel.linear_interpolate(target, accel*delta)
+	slave_vel.x = hvel.x
+	slave_vel.z = hvel.z
+
+
+func _physics_process(delta):
+	#print(get_tree().has_network_peer())
+	if get_tree().has_network_peer() == false and bcontroller == true:
+		movecheck(delta)
+		move_and_collide(slave_vel*delta)
+		#pass
+	if get_tree().has_network_peer():
+		server_move(delta)
+		#pass
+	#pass
 	
 func server_move(delta):
 	if is_network_master():
-		var dir = Vector3() # Where does the player intend to walk to
-		var cam_xform = cam.get_global_transform()
-		if Input.is_key_pressed(KEY_W):
-			dir += -cam_xform.basis[2]
-		if Input.is_key_pressed(KEY_S):
-			dir += cam_xform.basis[2]
-		if Input.is_key_pressed(KEY_A):
-			dir += -cam_xform.basis[0]
-		if Input.is_key_pressed(KEY_D):
-			dir += cam_xform.basis[0]
-		dir.y = 0
-		dir = dir.normalized()
-		var hvel = slave_vel
-		hvel.y = 0
-		var target = dir*MAX_SPEED
-		var accel
-		if dir.dot(hvel) > 0:
-			accel = ACCEL
-		else:
-			accel = DEACCEL
-		hvel = hvel.linear_interpolate(target, accel*delta)
-		slave_vel.x = hvel.x
-		slave_vel.z = hvel.z
-		#print(slave_vel)
+		movecheck(delta)
 		rset("slave_vel", slave_vel)
 		#move(slave_vel*delta)
-	else:
-		pass
 	move_and_collide(slave_vel*delta)
 
 func _process(delta):

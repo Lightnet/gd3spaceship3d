@@ -51,4 +51,6 @@ func load_settings():
 			_settings[section][key] = _config_file.get_value(section,key,null)
 			#print("%s: %s" % [key, val])
 	#return values
-	
+
+func get_settings():
+	return _settings

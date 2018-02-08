@@ -17,15 +17,12 @@ func _input(event):
 		face.y = 0
 		face = face.normalized()
 		var target = face*3
-		
 		var objprojectile = projectile.instance()
 		objprojectile.transform.origin = transform.origin + target
 		objprojectile.apply_impulse(transform.origin,target*10)
-		
 		get_node("/root/Node").add_child(objprojectile)
-		
-		pass
-	pass
+		#pass
+	#pass
 
 func _process(delta):
 	#	# Called every frame. Delta is time since last frame.
@@ -52,8 +49,8 @@ func _process(delta):
 			#dir = (get_global_transform().origin - hit.position).normalized()
 			#print(dir)
 			look_at(face,Vector3(0,1,0))
-			
-		pass
+		#pass
+	#pass
 
 func _ready():
 	# Called every time the node is added to the scene.
