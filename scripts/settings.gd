@@ -10,14 +10,16 @@ var _settings = {
 	"game":{
 		"language": "english",
 		"subtilte": false,
-		"difficulty": "normal"
+		"difficulty": 0,
+		"skipscene":true,
+		"simplemenu":false
 	},
 	"audio":{
 		#"mute": Globals.get("Settings/mute")
 		"master":100,
-		"bgm":100,
+		"musics":100,
 		"effects":100,
-		"voices":100,
+		"voice":100
 	},
 	"debug":{
 		"vector_color" : Color(1.0,1.0,0.0),
@@ -26,7 +28,10 @@ var _settings = {
 }
 
 func _ready():
-	save_settings()
+	var error = _config_file.load(SAVE_PATH)
+	if error != OK: #if no file create and save
+		print("create config!")
+		save_settings()
 	load_settings()
 	#print(_settings)
 	#pass
