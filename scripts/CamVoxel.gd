@@ -22,6 +22,10 @@ var bdragmouse = false
 var mouseposition_1 = Vector2(0,0)
 var mouseposition_2 = Vector2(0,0)
 
+var yaw = 0
+var pitch = 0
+var sensitivity = 0.01
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
@@ -92,20 +96,20 @@ func _input(ev):
 		if bdragmouse:
 			mouseposition_2 = ev.position
 			#print("?")
-			var dragx = mouseposition_2.x - mouseposition_1.x
-			var dragy = mouseposition_2.y - mouseposition_1.y
-			print(dragx)
-			if dragx != 0:
-				rotate(Vector3(0, 1, 0), deg2rad(dragx * 0.01))
-				#rotate_y(dragx * 0.01)
-				pass
-			if dragy != 0:
-				#rotate(Vector3(0, 0, 1), deg2rad(dragy * 0.01))
-				#rotate_z(dragx * 0.01)
-				rotate_object_local(Vector3(1, 0, 0),deg2rad(dragy * 0.01))#ok
-				#rotate_object_local(Vector3(0, 0, 1),dragx * 0.01)
-				pass
-			#pass
+			var drag = mouseposition_2 - mouseposition_1
+			
+			# Add to rotations
+			yaw = drag.x * sensitivity
+			pitch = drag.y * sensitivity
+			
+			# Apply rotations
+			#var aim_quat = Quat(Vector3(0, 1, 0), deg2rad(yaw)) * Quat(Vector3(1, 0, 0), deg2rad(pitch))
+			#var aim_matrix = Matrix3(aim_quat)
+			#set_rotation(aim_matrix.get_euler())
+			
+			rotate(Vector3(0, 1, 0), deg2rad(yaw))
+			rotate_object_local(Vector3(1, 0, 0),deg2rad(pitch))#ok
+			
 		
 	if Input.is_key_pressed(KEY_B):
 		if bdelete:

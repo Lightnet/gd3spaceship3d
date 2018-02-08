@@ -33,3 +33,5 @@ func _input(event):
 
 ```
 
+# Links:
+ * https://godotengine.org/qa/7920/move-character-in-facing-direction
