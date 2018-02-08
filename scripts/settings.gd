@@ -4,8 +4,20 @@ const SAVE_PATH = "user://config.cfg"
 
 var _config_file = ConfigFile.new()
 var _settings = {
+	"profile":{
+		"username":"guest"
+	},
+	"game":{
+		"language": "english",
+		"subtilte": false,
+		"difficulty": "normal"
+	},
 	"audio":{
 		#"mute": Globals.get("Settings/mute")
+		"master":100,
+		"bgm":100,
+		"effects":100,
+		"voices":100,
 	},
 	"debug":{
 		"vector_color" : Color(1.0,1.0,0.0),
