@@ -2,14 +2,14 @@
 
 importer="scene"
 type="PackedScene"
-path="res://.import/baseturret01.gltf-307d173dde91df70685dba2d3d9a8d09.scn"
+path="res://.import/baseturret01.gltf-e3ad30a3e2d76bdc2b05e29fda1c1957.scn"
 
 [deps]
 
-source_file="res://models/baseturret01.gltf"
+source_file="res://models/Turret01/baseturret01.gltf"
 source_md5="24b3842c6383c3ee95129f000d6f18f8"
 
-dest_files=[ "res://.import/baseturret01.gltf-307d173dde91df70685dba2d3d9a8d09.scn" ]
+dest_files=[ "res://.import/baseturret01.gltf-e3ad30a3e2d76bdc2b05e29fda1c1957.scn" ]
 dest_md5="08a80a1c564232a3200b7ffee022b485"
 
 [params]
