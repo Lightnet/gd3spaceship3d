@@ -18,3 +18,7 @@ https://github.com/KhronosGroup/glTF-Blender-Exporter
 https://github.com/Kupoman/blendergltf
  * Lasted Tested: 2018-02-05
  * Doesn't work
+
+Blender Export DAE 2.79:
+ * Work on import
+ * Error on play run.
