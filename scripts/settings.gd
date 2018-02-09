@@ -11,15 +11,15 @@ var _settings = {
 		"language": "english",
 		"subtilte": false,
 		"difficulty": 0,
-		"skipscene":true,
+		"skipcutscene":true,
 		"simplemenu":false
 	},
 	"audio":{
 		#"mute": Globals.get("Settings/mute")
-		"master":100,
-		"musics":100,
-		"effects":100,
-		"voice":100
+		"master":4.5,
+		"musics":4.5,
+		"effects":4.5,
+		"voice":4.5
 	},
 	"debug":{
 		"vector_color" : Color(1.0,1.0,0.0),
