@@ -7,15 +7,15 @@ path="res://.import/baseturret03.dae-5ef690d2add7462474d74d337c399129.scn"
 [deps]
 
 source_file="res://models/Turret03/baseturret03.dae"
-source_md5="862ce0b26893fcecf1838545fad1cac8"
+source_md5="7378cc989a33b6c769f9f817f951f173"
 
 dest_files=[ "res://.import/baseturret03.dae-5ef690d2add7462474d74d337c399129.scn" ]
-dest_md5="e6c320c3b2942692f86965088eea973a"
+dest_md5="42e565fd8f9f4e7686da77eac516558c"
 
 [params]
 
 nodes/root_type="Spatial"
-nodes/root_name="Scene Root"
+nodes/root_name="Turret01"
 nodes/root_scale=1.0
 nodes/custom_script=""
 nodes/storage=0

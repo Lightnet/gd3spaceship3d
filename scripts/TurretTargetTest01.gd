@@ -6,6 +6,8 @@ var point
 var dir = Vector3()
 var skeleton
 
+var boneid
+
 func _ready():
 	camera = get_node("/root/Node/Spatial/Camera")
 	#print(camera)
@@ -15,6 +17,10 @@ func _ready():
 	#print(skeleton.find_bone("Armature_Base"))
 	#print(skeleton.find_bone("Armature_turret"))
 	set_process(true)
+
+	var bonename = "Base"
+	#bonename = "turret"
+	boneid = skeleton.find_bone(bonename)
 	#pass
 	
 func _input(event):
@@ -36,7 +42,7 @@ func _process(delta):
 	var hit = space_state.intersect_ray(from, to)
 	if hit.size() != 0:
 		point.transform.origin = hit.position
-		dir = (hit.position - get_global_transform().origin).normalized()
+		dir = (hit.position - get_global_transform().origin)#.normalized()
 		var face = dir*-1
 		var base = face
 		base.y = 0
@@ -50,19 +56,14 @@ func _process(delta):
 		#rotate( Vector3(0,1,0), deg2rad(10) )#works
 		point.transform.origin = hit.position
 		#pass
-	var bonename = "Base"
-	#bonename = "turret"
-	var boneid = skeleton.find_bone(bonename)
+	
 	var turret_base = skeleton.get_bone_pose(boneid)
-	#turret_base.rotated( Vector3(0,1,0), deg2rad(10) * delta)
-	turret_base.rotated( Vector3(0,1,0), 100*  delta)
+	#turret_base = turret_base.rotated( Vector3(0,1,0), deg2rad(10) * delta)
+	#turret_base = turret_base.rotated( Vector3(0,1,0), 100*  delta)
 	#print(turret_base)
+	dir= dir*-1
+	turret_base = turret_base.looking_at(dir,Vector3(0,1,0))
 	skeleton.set_bone_pose( boneid, turret_base )
-	
 	#skeleton.rotate( Vector3(0,1,0), deg2rad(10) * delta)
-	print("test")
-	
-	
-	
-	
+	#print("test")
 	pass

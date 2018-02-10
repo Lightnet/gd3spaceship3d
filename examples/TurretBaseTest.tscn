@@ -584,7 +584,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Scene Root" parent="Spatial/KinematicBody" index="1" instance=ExtResource( 1 )]
+[node name="Turret01" parent="Spatial/KinematicBody" index="1" instance=ExtResource( 1 )]
 
 script = ExtResource( 2 )
 
@@ -605,4 +605,4 @@ material/0 = SubResource( 5 )
 _sections_unfolded = [ "material" ]
 
 
-[editable path="Spatial/KinematicBody/Scene Root"]
+[editable path="Spatial/KinematicBody/Turret01"]
